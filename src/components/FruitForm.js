@@ -15,17 +15,32 @@ function FruitForm({ fruits }) {
   const [sweetness, setSweetness] = useState(1)
   const [color, setColor] = useState(COLORS[0])
   const [seeds, setSeeds] = useState('yes')
+  const [errors, setErrors] = useState([])
   const history = useHistory()
 
+  useEffect(() => {
+    const errors = []
+    if(name.length < 3){
+      errors.push("Name must be 3 or more characters")
+    }
+    if(name.length > 20){
+      errors.push("Name must be 20 characters or less")
+    }
+    const fruitNames = fruits.map(fruit => fruit.name)
+    if (fruitNames.includes(name)){
+      errors.push("Name already exists")
+    }
+    if(sweetness < 1 || sweetness > 10){
+      errors.push("Sweetness must be between 1 and 10")
+    }
+    setErrors(errors)
+  }, [name, fruits, sweetness])
 
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    console.log({ 
-      name, sweetness, color, seeds 
-    })
+  const onSubmit = (event) => {
+    event.preventDefault()
+    console.log({ name, sweetness, color, seeds })
   
-      history.push('/')
+    history.push('/')
 
   }
 
@@ -33,6 +48,11 @@ function FruitForm({ fruits }) {
     <form className="fruit-form" onSubmit={onSubmit}>
       <h2>Enter a Fruit</h2>
       <ul className="errors">
+        {errors.map(error => (
+          <li key={error}>
+            {error}
+          </li>
+        ))}
       </ul>
       <label>
         Name
@@ -88,7 +108,7 @@ function FruitForm({ fruits }) {
         />
         Seeds
       </label>
-      <button type="submit">Submit Fruit</button>
+      <button type="submit" disabled={errors.length > 0 ? true : false}>Submit Fruit</button>
     </form>
   );
 }
