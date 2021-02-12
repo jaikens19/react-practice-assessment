@@ -15,14 +15,18 @@ function FruitForm({ fruits }) {
   const [sweetness, setSweetness] = useState(1)
   const [color, setColor] = useState(COLORS[0])
   const [seeds, setSeeds] = useState('yes')
+  const history = useHistory()
 
 
 
-  let history = useHistory()
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log({ name, sweetness, color, seeds })
+    console.log({ 
+      name, sweetness, color, seeds 
+    })
+  
       history.push('/')
+
   }
 
   return (
@@ -69,6 +73,7 @@ function FruitForm({ fruits }) {
           type="radio"
           value="no"
           name="seeds"
+          checked={seeds === 'no' ? true : false}
           onChange={(event) => setSeeds(event.target.value)}
         />
         No Seeds
@@ -78,6 +83,7 @@ function FruitForm({ fruits }) {
           type="radio"
           value="yes"
           name="seeds"
+          checked={seeds === 'yes' ? true : false}
           onChange={(event) => setSeeds(event.target.value)}
         />
         Seeds
