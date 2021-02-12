@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+
 const COLORS = [
   "red",
   "orange",
@@ -8,6 +11,20 @@ const COLORS = [
 ];
 
 function FruitForm({ fruits }) {
+  const [name, setName] = useState('')
+  const [sweetness, setSweetness] = useState(1)
+  const [color, setColor] = useState(COLORS[0])
+  const [seeds, setSeeds] = useState('yes')
+
+
+
+  let history = useHistory()
+  const onSubmit = (e) => {
+    e.preventDefault()
+    console.log({ name, sweetness, color, seeds })
+      history.push('/')
+  }
+
   return (
     <form className="fruit-form" onSubmit={onSubmit}>
       <h2>Enter a Fruit</h2>
@@ -18,11 +35,16 @@ function FruitForm({ fruits }) {
         <input
           type="text"
           name="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
         />
       </label>
       <label>
         Select a Color
-        <select>
+        <select 
+          value={color}
+          onChange={(event) => setColor(event.target.value)}
+        >
           {COLORS.map(color => (
             <option
               key={color}
@@ -38,6 +60,8 @@ function FruitForm({ fruits }) {
         <input
           type="number"
           name="sweetness"
+          value={sweetness}
+          onChange={(event) => setSweetness(event.target.value)}
         />
       </label>
       <label>
@@ -45,6 +69,7 @@ function FruitForm({ fruits }) {
           type="radio"
           value="no"
           name="seeds"
+          onChange={(event) => setSeeds(event.target.value)}
         />
         No Seeds
       </label>
@@ -53,6 +78,7 @@ function FruitForm({ fruits }) {
           type="radio"
           value="yes"
           name="seeds"
+          onChange={(event) => setSeeds(event.target.value)}
         />
         Seeds
       </label>
