@@ -35,6 +35,7 @@ function FruitForm({ fruits }) {
     }
     setErrors(errors)
   }, [name, fruits, sweetness])
+  
 
   const onSubmit = (event) => {
     event.preventDefault()

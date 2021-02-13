@@ -17,7 +17,6 @@ if(favFruit){
   return (
   <>
   </>
-
   )
 }
 }
